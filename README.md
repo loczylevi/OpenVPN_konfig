@@ -1,4 +1,7 @@
 # OpenVPN_konfig
+### Ajánlott zene telepités közben:
+
+https://www.youtube.com/watch?v=MK6TXMsvgQg
 
 ## Debian op rendszer (*letarhálása*) leszedése:
 
