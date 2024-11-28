@@ -1,6 +1,6 @@
 # OpenVPN_konfig
 
-## Debian op rendszer leszedése:
+## Debian op rendszer (*letarhálása*) leszedése:
 
 https://www.debian.org/
 
