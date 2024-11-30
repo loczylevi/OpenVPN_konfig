@@ -168,6 +168,7 @@ cd /etc/openvpn/easy-rsa
 /usr/sbin/openvpn --genkey secret ta.key
 ```
 
+
 #Fájlok áthelyezése az /etc/openvpn/ könyvtárba
 
 ```bash
@@ -176,6 +177,15 @@ cp pki/issued/server.crt /etc/openvpn/
 cp pki/private/server.key /etc/openvpn/
 cp pki/dh.pem /etc/openvpn/
 cp ta.key /etc/openvpn/
+```
+
+##ellenörzés:
+```bash
+ls /etc/openvpn/ca.crt
+ls /etc/openvpn/server.crt
+ls /etc/openvpn/server.key
+ls /etc/openvpn/dh.pem
+ls /etc/openvpn/ta.key
 ```
 
 9. OpenVPN szerver konfiguráció létrehozása
