@@ -144,14 +144,14 @@ systemctl status openvpn@server.service
 journalctl -xeu openvpn@server.service
 ```
 
-#-__________________-
+# -__________________-
 
 ```bash
 apt update
 apt install easy-rsa
 ```
-#2. PKI könyvtár létrehozása
-##Készítsünk egy új PKI (Public Key Infrastructure) könyvtárat, amely a tanúsítványokat és a kulcsokat fogja kezelni.
+# PKI könyvtár létrehozása
+## Készítsünk egy új PKI (Public Key Infrastructure) könyvtárat, amely a tanúsítványokat és a kulcsokat fogja kezelni.
 
 ```bash
 mkdir -p /etc/openvpn/easy-rsa
@@ -159,7 +159,7 @@ cp -r /usr/share/easy-rsa/* /etc/openvpn/easy-rsa/
 cd /etc/openvpn/easy-rsa
 ```
 
-#generálások
+# generálások
 ```bash
 ./easyrsa init-pki
 ./easyrsa build-ca
@@ -169,7 +169,7 @@ cd /etc/openvpn/easy-rsa
 ```
 
 
-#Fájlok áthelyezése az /etc/openvpn/ könyvtárba
+# Fájlok áthelyezése az /etc/openvpn/ könyvtárba
 
 ```bash
 cp pki/ca.crt /etc/openvpn/
@@ -179,7 +179,7 @@ cp pki/dh.pem /etc/openvpn/
 cp ta.key /etc/openvpn/
 ```
 
-##ellenörzés:
+## ellenörzés:
 ```bash
 ls /etc/openvpn/ca.crt
 ls /etc/openvpn/server.crt
@@ -188,13 +188,13 @@ ls /etc/openvpn/dh.pem
 ls /etc/openvpn/ta.key
 ```
 
-9. OpenVPN szerver konfiguráció létrehozása
+# OpenVPN szerver konfiguráció létrehozása
 Hozz létre egy szerver konfigurációs fájlt az /etc/openvpn/server.conf helyen:
 ```bash
 nano /etc/openvpn/server.conf
 ```
 
-#konfigurációs fájl:
+# konfigurációs fájl:
 ```bash
 port 1194
 proto udp
@@ -220,7 +220,7 @@ verb 3
 explicit-exit-notify 1
 ```
 
-10. OpenVPN szerver indítása
+# OpenVPN szerver indítása
 Indítsd el az OpenVPN szervert:
 ```bash
 systemctl start openvpn@server
