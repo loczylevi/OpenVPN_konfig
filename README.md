@@ -144,6 +144,84 @@ systemctl status openvpn@server.service
 journalctl -xeu openvpn@server.service
 ```
 
+#-__________________-
+
+```bash
+apt update
+apt install easy-rsa
+```
+#2. PKI könyvtár létrehozása
+##Készítsünk egy új PKI (Public Key Infrastructure) könyvtárat, amely a tanúsítványokat és a kulcsokat fogja kezelni.
+
+```bash
+mkdir -p /etc/openvpn/easy-rsa
+cp -r /usr/share/easy-rsa/* /etc/openvpn/easy-rsa/
+cd /etc/openvpn/easy-rsa
+```
+
+#generálások
+```bash
+./easyrsa init-pki
+./easyrsa build-ca
+./easyrsa build-server-full server nopass
+./easyrsa gen-dh
+/usr/sbin/openvpn --genkey secret ta.key
+```
+
+#Fájlok áthelyezése az /etc/openvpn/ könyvtárba
+
+```bash
+cp pki/ca.crt /etc/openvpn/
+cp pki/issued/server.crt /etc/openvpn/
+cp pki/private/server.key /etc/openvpn/
+cp pki/dh.pem /etc/openvpn/
+cp ta.key /etc/openvpn/
+```
+
+9. OpenVPN szerver konfiguráció létrehozása
+Hozz létre egy szerver konfigurációs fájlt az /etc/openvpn/server.conf helyen:
+```bash
+nano /etc/openvpn/server.conf
+```
+
+#konfigurációs fájl:
+```bash
+port 1194
+proto udp
+dev tun
+ca /etc/openvpn/ca.crt
+cert /etc/openvpn/server.crt
+key /etc/openvpn/server.key
+dh /etc/openvpn/dh.pem
+tls-auth /etc/openvpn/ta.key 0
+cipher AES-256-CBC
+auth SHA256
+server 10.8.0.0 255.255.255.0
+ifconfig-pool-persist ipp.txt
+push "redirect-gateway def1 bypass-dhcp"
+push "dhcp-option DNS 8.8.8.8"
+push "dhcp-option DNS 8.8.4.4"
+keepalive 10 120
+persist-key
+persist-tun
+status openvpn-status.log
+log-append /var/log/openvpn.log
+verb 3
+explicit-exit-notify 1
+```
+
+10. OpenVPN szerver indítása
+Indítsd el az OpenVPN szervert:
+```bash
+systemctl start openvpn@server
+systemctl status openvpn@server
+systemctl enable openvpn@server
+journalctl -xeu openvpn@server
+```
+
+
+
+
 
 
 
